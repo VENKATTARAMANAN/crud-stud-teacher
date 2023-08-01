@@ -39,7 +39,7 @@ e.preventDefault();
               control={<Checkbox value="remember" color="primary" />}
               label="Remember me"
             />
-      <Button type="submit" variant="contained" onClick={()=>navigate('/Signin')}>Signup</Button>
+      <Button type="submit" variant="contained" onClick={()=>navigate('/')}>Signup</Button>
       </div>
       </form>
     </div>
