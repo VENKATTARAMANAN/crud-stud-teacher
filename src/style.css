@@ -110,6 +110,20 @@ nav{
   @media screen and (max-width:750px){
     .main{
            margin-left: 120px;
+           margin-top: 50px;
     }
   }
-  /* --------- */
+
+  /* ---------------Student createdata field--------------- */
+
+  .input{
+    display: flex;
+    flex-wrap: wrap;
+
+    gap:1.5rem;
+  }
+  .in-field{
+    width:480px;
+  }
+
+

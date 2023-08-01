@@ -1,0 +1,23 @@
+[
+    {
+      "name": "venkat",
+      "qualification": "BED",
+      "medium": "tamil",
+      "age": 35,
+      "dob": "2032-10-10"
+         },
+    {
+      "name": "arun",
+     "qualification": "Bsc",
+      "medium": "english",
+     "age": 55,
+      "dob": "2032-10-10"
+         },
+    {
+      "name": "naban",
+     "qualification": "Bcom",
+      "medium": "tamil",
+      "age": 55,
+      "dob": "2032-10-10"
+    }
+  ]
