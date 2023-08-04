@@ -1,91 +1,138 @@
 import React, { useEffect, useState } from "react";
 import Mainpage from "../Base/Mainpage";
-import { Button, TextField } from "@mui/material";
-import studData from "./StudentData";
+import {
+  Button,
+  TextField,
+  FormControl,
+  InputLabel,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import { useNavigate, useParams } from "react-router-dom";
+import { fieldValidationSchema } from "./CreateStudent";
+import { useFormik } from "formik";
 
 const EditStudent = ({ studentdata, setStudentData }) => {
-  const navigate = useNavigate();
   const { id } = useParams();
-
-  const [name, setName] = useState("");
-  const [std, setStd] = useState("");
-  const [medium, setMedium] = useState("");
-  const [age, setAge] = useState("");
-  const [dob, setDob] = useState("");
-  const [location, setLocation] = useState("");
+  const navigate = useNavigate();
   var editdata = studentdata[id];
- 
-  useEffect(() => {
-    setName(editdata.name);
-    setStd(editdata.std);
-    setMedium(editdata.medium);
-    setAge(editdata.age);
-    setDob(editdata.dob);
-    setLocation(editdata.location);
-  }, []);
+  const { handleSubmit, values, handleChange, handleBlur, errors, touched } =
+    useFormik({
+      initialValues: {
+        name: editdata.name,
+        std: editdata.std,
+        medium: editdata.medium,
+        age: editdata.age,
+        dob: editdata.dob,
+        location: editdata.location,
+      },
+      validationSchema: fieldValidationSchema,
+      onSubmit: (values) => {
+        console.log("onsubmit", values);
+        editStudent();
+      },
+    });
 
   const editStudent = () => {
-    const updatedStudent = {
-      name: name,
-      std: std,
-      medium: medium,
-      age: age,
-      dob: dob,
-      location: location,
-    };
-    studentdata[id] = updatedStudent;
+    studentdata[id] = values;
     setStudentData([...studentdata]);
     navigate("/student");
   };
 
   return (
     <div>
-      <Mainpage>
-        <div className="input">
-          <TextField
-            label="Name"
-            className="in-field"
-            value={name}
-            onChange={(e) => setName(e.target.value)}
-          ></TextField>
-          <TextField
-            label="Class"
-            className="in-field"
-            value={std}
-            onChange={(e) => setStd(e.target.value)}
-          ></TextField>
-          <TextField
-            label="Medium"
-            className="in-field"
-            value={medium}
-            onChange={(e) => setMedium(e.target.value)}
-          ></TextField>
-          <TextField
-            label="Age"
-            className="in-field"
-            value={age}
-            onChange={(e) => setAge(e.target.value)}
-          ></TextField>
-          <TextField
-            label=""
-            type={"date"}
-            className="in-field"
-            value={dob}
-            onChange={(e) => setDob(e.target.value)}
-          ></TextField>
-          <TextField
-            label="Location"
-            className="in-field"
-            value={location}
-            onChange={(e) => setLocation(e.target.value)}
-          ></TextField>
-        </div>
-        <br />
-        <Button variant="contained" onClick={editStudent}>
-          Edit Student
-        </Button>
-      </Mainpage>
+      <form onSubmit={handleSubmit}>
+        <Mainpage>
+          <div className="input">
+            <TextField
+              name="name"
+              type="name"
+              label="Name"
+              className="in-field"
+              value={values.name}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            ></TextField>
+            <div style={{ color: "crimson" }}>
+              {touched.name && errors.name ? errors.name : ""}
+            </div>
+            <TextField
+              name="std"
+              type="std"
+              label="Class"
+              className="in-field"
+              value={values.std}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            ></TextField>
+            <div style={{ color: "crimson" }}>
+              {touched.std && errors.std ? errors.std : ""}
+            </div>
+            <FormControl required sx={{ maxWidth: 480 }}>
+              <InputLabel id="demo-simple-select-required-label">
+                Medium
+              </InputLabel>
+              <Select
+                label="Medium*"
+                value={values.medium}
+                onChange={handleChange}
+                onBlur={handleBlur}
+                name="medium"
+                type="medium"
+              >
+                <MenuItem value={values.medium}>
+                  <em>{values.medium}</em>
+                </MenuItem>
+                <MenuItem value={"Tamil"}>Tamil</MenuItem>
+                <MenuItem value={"English"}>English</MenuItem>
+              </Select>
+            </FormControl>
+            <div style={{ color: "crimson" }}>
+              {touched.medium && errors.medium ? errors.medium : ""}
+            </div>
+            <TextField
+              name="age"
+              type="age"
+              label="Age"
+              className="in-field"
+              value={values.age}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            ></TextField>
+            <div style={{ color: "crimson" }}>
+              {touched.age && errors.age ? errors.age : ""}
+            </div>
+            <TextField
+              name="dob"
+              label=""
+              type={"date"}
+              className="in-field"
+              value={values.dob}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            ></TextField>
+            <div style={{ color: "crimson" }}>
+              {touched.dob && errors.dob ? errors.dob : ""}
+            </div>
+            <TextField
+              name="location"
+              type="location"
+              label="Location"
+              className="in-field"
+              value={values.location}
+              onChange={handleChange}
+              onBlur={handleBlur}
+            ></TextField>
+            <div style={{ color: "crimson" }}>
+              {touched.location && errors.location ? errors.location : ""}
+            </div>
+          </div>
+          <br />
+          <Button variant="contained" type="submit">
+            Edit Student
+          </Button>
+        </Mainpage>
+      </form>
     </div>
   );
 };
